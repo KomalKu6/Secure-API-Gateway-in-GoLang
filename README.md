@@ -70,6 +70,31 @@ Let's start to build:
  Step 2: Install Dependencies: 
  go get github.com/gofiber/fiber/v2
  go get github.com/golang-jwt/jwt/v5
+
+Real-world uses:
+This is how Google, Cisco, Amazon, Microsoft, etc. build stateless secure backend APIs.
+
+Code Part Covered:
+
+package main
+import ("github.com/gofiber/fiber/v2"
+	"secure-api-gateway-go/handlers"
+	"secure-api-gateway-go/middleware")
+
+Import	    What it gives you	               Why it matters
+fiber/v2	  Web framework	                 To create routes and run the server
+handlers	  Login + page handlers	         Clean separation of login + routes
+middleware	Token + role check logic	    Secure each route with role-based access
+
+Step-by-Step Explanation:
+
+Code Line	  What it Does	                            Why it Matters
+func main()	The entry point of the Go application	Every Go executable must start here
+app := fiber.New()	Initializes the web server using Fiber	Just like Express in Node.js
+app.Post("/login", handlers.Login)	Defines a route to accept login data	Accepts username & role, and returns a JWT
+app.Get("/user", middleware.JWTMiddleware("user"), handlers.UserPage)	Defines a protected route for users	Token & role "user" required
+app.Get("/admin", middleware.JWTMiddleware("admin"), handlers.AdminPage)	Protected route for admin access	Token & role "admin" required
+app.Listen(":3000")	Starts the web server on port 3000	App runs at http://localhost:3000
  
 
  
