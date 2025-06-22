@@ -4,7 +4,7 @@ Issue a token when user logs in
 Protect routes like /admin and /user
 Allow access only if JWT is valid and role matches.
 
-✅ Why?
+ Why?
 go mod init: Initializes Go module for dependency management
 
 go get: Downloads Fiber (web framework) & JWT lib
@@ -12,7 +12,7 @@ go get: Downloads Fiber (web framework) & JWT lib
 
 ---------------------------------
 
-🎯 Goal of the Project
+ Goal of the Project
 
 --------------------------------
 
@@ -24,7 +24,7 @@ Only allows access based on the role in the token
 
 -------------------------------
 
-🔧 Tools we’ll Use
+ Tools we’ll Use
 Tool	Why
 ------------------------------
 GoLang	Backend language
@@ -34,7 +34,7 @@ Postman/curl	For testing your endpoints.
 
 ------------------------------------
 
-🧠 Project Logic:
+ Project Logic:
 
 ------------------------------------
 
@@ -52,7 +52,7 @@ If NO → block
 
 ------------------------------------
 
-🧱 Features You'll Build:
+ Features You'll Build:
 Feature	Purpose
 ----------------------------------
 
