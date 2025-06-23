@@ -105,6 +105,116 @@ app.Get("/user", middleware.JWTMiddleware("user"), handlers.UserPage)	Defines a 
 app.Get("/admin", middleware.JWTMiddleware("admin"), handlers.AdminPage)	Protected route for admin access	Token & role "admin" required
 app.Listen(":3000")	Starts the web server on port 3000	App runs at http://localhost:3000
 
+-> Testing JWT-Based Secure API with Postman:
+This guide shows how to test a real-world secure API using GoLang, JWT, and Fiber in Postman.
+It includes explanations of each step, why we use certain HTTP methods like POST, how headers work, and how to test protected routes securely.
+
+Why Use Postman?
+Postman lets you simulate how a frontend app or client talks to a backend API.
+
+In real life, systems like:
+Cisco Secure Access
+ AWS IAM
+Google APIs
+-> use secure HTTP requests with tokens, headers, and JSON — and Postman helps you test that as a developer.
+
+we're testing backend API
+
+Route	Method	Description
+/login	POST	Accepts user info, returns JWT
+/admin	GET	Protected admin route
+/user	GET	Protected user route
+
+STEP 1: Test the /login Route (to get JWT Token)
+Goal:
+Send login info → receive JWT token in response.
+
+Why POST?
+POST is used when you're sending data to the server.
+In this case, we send a JSON body with username and role.
+
+How To Do It in Postman
+Setting	Value
+Method	POST
+URL	http://localhost:3000/login
+Body type	raw
+Content format	JSON (application/json)
+Body content	Paste this:
+
+{
+  "username": "komal",
+  "role": "admin"
+}
+
+Why JSON?
+JSON is the standard format used by most APIs today.
+It's structured, lightweight, and easy for Go (c.BodyParser) to read.
+The key-value pairs (username, role) are mapped to a struct in Go:
+
+Note : JSON must match the field names.
+
+Header Setup
+Go to the Headers tab and ensure this is added:
+Key	Value
+Content-Type	application/json
+Why? -> This tells the server: “The body I’m sending is JSON. Please parse it as JSON.
+
+If successful, you’ll get the token
+
+STEP 2: Test the /admin Route (using the token)
+Goal:
+Access a protected route using the token you got from /login
+
+How To Do It
+Setting	Value
+Method	GET
+URL	http://localhost:3000/admin
+
+Headers
+Go to Headers tab and set:
+Key	Value
+Authorization	Bearer <your_token_here>
+
+Note: Make sure there is a space between Bearer and your token.
+
+Why Use Bearer Token in Header?
+This simulates how real browsers and mobile apps send tokens.
+Authorization: Bearer <token> is the standard header for secure API access.
+
+Your middleware in Go reads this header like:
+authHeader := c.Get("Authorization")
+
+Response: 
+If your token has "role": "admin":
+Welcome, admin!
+
+If your token has "role": "user":
+403 Forbidden: role mismatch
+
+This proves your role-based access logic is working perfectly.
+
+STEP 3: Try Wrong Role
+Go back to /login
+Change role to "user" in body:
+
+{
+  "username": "komal",
+  "role": "user"
+}
+
+Note: Use the new token on /admin with GET
+Result : 403 Forbidden: role mismatch
+
+This shows you’ve built secure APIs that only allow access if the JWT token has the correct role.
+
+
+
+
+
+
+
+
+
 
 
  
