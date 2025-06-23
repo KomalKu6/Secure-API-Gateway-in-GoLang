@@ -4,6 +4,14 @@ Issue a token when user logs in
 Protect routes like /admin and /user
 Allow access only if JWT is valid and role matches.
 
+What I Learnt: 
+How to build a web server in Go using Fiber
+How to generate and validate JWT tokens
+How to use middleware to protect routes
+How to enforce role-based access
+How to test real-world APIs using Postman
+How modern cloud systems manage stateless authentication
+
  Why?
 go mod init: Initializes Go module for dependency management
 
