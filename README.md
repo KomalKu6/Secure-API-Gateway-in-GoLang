@@ -95,6 +95,9 @@ app.Post("/login", handlers.Login)	Defines a route to accept login data	Accepts 
 app.Get("/user", middleware.JWTMiddleware("user"), handlers.UserPage)	Defines a protected route for users	Token & role "user" required
 app.Get("/admin", middleware.JWTMiddleware("admin"), handlers.AdminPage)	Protected route for admin access	Token & role "admin" required
 app.Listen(":3000")	Starts the web server on port 3000	App runs at http://localhost:3000
+
+
+
  
 
  
